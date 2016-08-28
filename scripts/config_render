@@ -76,7 +76,7 @@ parser = ArgumentParser(version=VERSION_TEXT, description=DESCRIPTION,
 parser.register("action", "help_config", HelpConfig)
 parser.add_argument("-ch", "--config-help", help="show config file help and exit",
                     action="help_config")
-parser.add_argument("-n", "--name", metavar="config_name", type=str, default="default",
+parser.add_argument("-n", "--name", metavar="config_name", type=str, default=None,
                     help="Name of configuration to be used.")
 parser.add_argument("config", help="YAML config file")
 parser.add_argument("-t", "--template_name", help="Template file", metavar="template")
