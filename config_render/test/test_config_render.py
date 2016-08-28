@@ -5,9 +5,11 @@ from jinja2 import TemplateNotFound
 from config_render import config_render
 from config_render.config_render import FileTemplateLoader
 
-try:
+import six
+
+if six.PY2:
     import mock
-except ImportError:
+else:
     from unittest import mock
 
 
@@ -66,7 +68,3 @@ class TestConfigRender(unittest.TestCase):
         get_template_mock.assert_called_once_with("some_template")
         get_template_mock.return_value.render.assert_called_once_with(Test='bar', Test2='foo2',
                                                                       Test3='foo')
-
-
-if __name__ == '__main__':
-    unittest.main()
