@@ -26,9 +26,7 @@ class TestConfiguration(unittest.TestCase):
         self.assertEqual(conf.env_variables, {})
         self.assertEqual(conf.variables, {})
 
-    @mock.patch("config_render.config.getattr", wraps=getattr)
-    @mock.patch("config_render.config.setattr", wraps=setattr)
-    def test_set_if_exists_not_exits(self, set_mock, get_mock):
+    def test_set_if_exists_not_exits(self):
         """Test test_set_if_exists with non existing value."""
         conf = config.Configuration("Foo")
         self.assertEqual(conf.template_path, None)
@@ -36,12 +34,8 @@ class TestConfiguration(unittest.TestCase):
         conf.set_if_exists({}, "template_path")
 
         self.assertEqual(conf.template_path, None)
-        get_mock.assert_called_once_with(conf, "template_path")
-        set_mock.assert_called_once_with(conf, "template_path", None)
 
-    @mock.patch("config_render.config.getattr", wraps=getattr)
-    @mock.patch("config_render.config.setattr", wraps=setattr)
-    def test_set_if_exists_exits(self, set_mock, get_mock):
+    def test_set_if_exists_exits(self):
         """Test test_set_if_exists with existing value."""
         some_obj = mock.MagicMock()
         conf = config.Configuration("Foo")
@@ -50,8 +44,6 @@ class TestConfiguration(unittest.TestCase):
         conf.set_if_exists({"template_path": some_obj}, "template_path")
 
         self.assertEqual(conf.template_path, some_obj)
-        get_mock.assert_called_once_with(conf, "template_path")
-        set_mock.assert_called_once_with(conf, "template_path", some_obj)
 
     @mock.patch.object(config.Configuration, "set_if_exists")
     def test_parse(self, set_if_exists_mock):
