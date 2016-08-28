@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/BrnoPCmaniak/config_render.svg?branch=develop)](https://travis-ci.org/BrnoPCmaniak/config_render)
-[![Coverage Status](https://coveralls.io/repos/github/BrnoPCmaniak/config_render/badge.svg?branch=develop)](https://coveralls.io/github/BrnoPCmaniak/config_render?branch=develop)
+[![Build Status](https://travis-ci.org/BrnoPCmaniak/config_render.svg?branch=master)](https://travis-ci.org/BrnoPCmaniak/config_render)
+[![Coverage Status](https://coveralls.io/repos/github/BrnoPCmaniak/config_render/badge.svg?branch=master)](https://coveralls.io/github/BrnoPCmaniak/config_render?branch=master)
 Config Render
 =============
 
