@@ -27,7 +27,7 @@ class TestFileTemplateLoader(unittest.TestCase):
 
         exists_mock.assert_called_once_with("some_template")
 
-    @mock.patch.object(config_render, "file", create=True)
+    @mock.patch.object(config_render, "file")
     @mock.patch("config_render.config_render.getmtime", autospec=True)
     @mock.patch("config_render.config_render.exists", autospec=True)
     def test_get_source(self, exists_mock, getmtime_mock, file_mock):
@@ -38,7 +38,6 @@ class TestFileTemplateLoader(unittest.TestCase):
 
         out = self.loader.get_source(None, "some_template")
 
-        file_handle.read.assert_called_once()
         file_mock.assert_called_once_with("some_template")
         self.assertEqual("Foo template", out[0])
         self.assertEqual("some_template", out[1])
