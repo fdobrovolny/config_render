@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/BrnoPCmaniak/config_render.svg?branch=develop)](https://travis-ci.org/BrnoPCmaniak/config_render)
+[![Coverage Status](https://coveralls.io/repos/github/BrnoPCmaniak/config_render/badge.svg?branch=develop)](https://coveralls.io/github/BrnoPCmaniak/config_render?branch=develop)
 Config Render
 =============
 
@@ -28,7 +30,10 @@ optional arguments:
   -v, --version         show program's version number and exit
   -ch, --config-help    show config file help and exit
   -n config_name, --name config_name
-                        Name of configuration to be used.
+                        Name of configuration to be used. If not specified
+                        configuration with name 'default' will be used or if
+                        there is no such configuration and config has only one
+                        item than it will use it.
   -t template, --template_name template
                         Template file
   -o FILE, --output_file FILE

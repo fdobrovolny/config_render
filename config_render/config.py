@@ -14,10 +14,12 @@ class Configuration(object):
     template_path_var = None
     output_file_path = None
     output_file_path_var = None
-    env_variables = {}
-    variables = {}
+    env_variables = None
+    variables = None
 
     def __init__(self, name, configuration_dictionary=None):
+        self.env_variables = {}
+        self.variables = {}
         self.name = name
         if configuration_dictionary:
             self.parse(configuration_dictionary)
@@ -48,14 +50,21 @@ class Configuration(object):
 
     def get_filename(self, output_file=None):
         """Get filename or OutputFileNotSpecified"""
-        filename = output_file or os.environ.get(self.output_file_path_var, self.output_file_path)
+        if self.output_file_path_var is not None:
+            filename = output_file or os.environ.get(self.output_file_path_var,
+                                                     self.output_file_path)
+        else:
+            filename = output_file or self.output_file_path
         if filename is None:
             raise OutputFileNotSpecifiedException()
         return expandvars(filename)
 
     def get_template(self, template_name=None):
         """Get template or TemplateNameNotSpecified"""
-        template = template_name or os.environ.get(self.template_path_var, self.template_path)
+        if self.template_path_var is not None:
+            template = template_name or os.environ.get(self.template_path_var, self.template_path)
+        else:
+            template = template_name or self.template_path
         if template is None:
             raise TemplateNameNotSpecifiedException()
         return template
@@ -67,12 +76,32 @@ class Configuration(object):
 
 
 class Config(object):
-    configurations = {}
+    configurations = None
+
+    def __init__(self):
+        self.configurations = {}
 
     def __getitem__(self, name):
-        """Get configuration from config."""
+        """Get configuration from config.
+
+        :param name: Name of configuration
+        :type name: String
+        :return: Configuration
+        :rtype: Configuration
+
+        if name is None return default configuartion if it does not exists
+        and configurations have only one item then return it else raise
+        ConfigurationNotFoundException.
+        """
+        if name is None:
+            if "default" in self.configurations:
+                return self["default"]
+            elif len(self.configurations) == 1:
+                return self[list(self.configurations.keys())[0]]
+            else:
+                raise ConfigurationNotFoundException("default")
         try:
-            return self.configurations.get(name)
+            return self.configurations[name]
         except KeyError:
             raise ConfigurationNotFoundException(name)
 

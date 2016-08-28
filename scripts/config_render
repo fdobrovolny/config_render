@@ -57,7 +57,9 @@ EPILOG = """
 Copyright (C) 2016 Filip Dobrovolny
 """
 
-VERSION_TEXT = "%%(prog)s %s\n\nCopyright (C) 2016 Filip Dobrovolny\nLicense: MIT" % __version__
+VERSION_TEXT = (
+    "config_render %s\n\nCopyright (C) 2016 Filip Dobrovolny\nLicense: MIT\n" % __version__
+)
 DESCRIPTION = "Render your files with Jinja2 templates."
 
 
@@ -71,13 +73,28 @@ class HelpConfig(Action):
         parser.exit()
 
 
-parser = ArgumentParser(version=VERSION_TEXT, description=DESCRIPTION,
+class PrintVersion(Action):
+    def __init__(self, option_strings, dest=SUPPRESS, default=SUPPRESS, help=None):
+        super(PrintVersion, self).__init__(option_strings=option_strings, dest=dest,
+                                           default=default, nargs=0, help=help)
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        parser._print_message(VERSION_TEXT)
+        parser.exit()
+
+
+parser = ArgumentParser(description=DESCRIPTION,
                         formatter_class=RawDescriptionHelpFormatter, epilog=EPILOG)
 parser.register("action", "help_config", HelpConfig)
+parser.register("action", "print_version", PrintVersion)
+parser.add_argument("-v", "--version", help="show program's version number and exit",
+                    action="print_version")
 parser.add_argument("-ch", "--config-help", help="show config file help and exit",
                     action="help_config")
-parser.add_argument("-n", "--name", metavar="config_name", type=str, default="default",
-                    help="Name of configuration to be used.")
+parser.add_argument("-n", "--name", metavar="config_name", type=str, default=None,
+                    help=("Name of configuration to be used. If not specified configuration "
+                          "with name 'default' will be used or if there is no such configuration "
+                          "and config has only one item than it will use it."))
 parser.add_argument("config", help="YAML config file")
 parser.add_argument("-t", "--template_name", help="Template file", metavar="template")
 parser.add_argument("-o", "--output_file", help="Output File", metavar="FILE")
