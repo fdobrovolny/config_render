@@ -3,7 +3,7 @@
 '''
 Created on 28. 8. 2016
 
-@author: Filip Dobrovolný
+@author: Filip Dobrovolny
 '''
 
 from setuptools import setup
