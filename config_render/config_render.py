@@ -13,7 +13,7 @@ class FileTemplateLoader(BaseLoader):
                     raise TemplateNotFound(template)
                 mtime = getmtime(template)
                 with file(expandvars(template)) as f:
-                    source = f.read().decode('utf-8')
+                    source = f.read()
                 return source, template, lambda: mtime == getmtime(template)
 
 
