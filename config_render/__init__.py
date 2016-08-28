@@ -6,7 +6,7 @@ from .exceptions import (
     ConfigRenderException, ConfigurationNotFoundException,
     NotSpecifiedException, OutputFileNotSpecifiedException, TemplateNameNotSpecifiedException)
 
-__version__ = '0.0.1a1'
+__version__ = '0.0.1a2'
 
 __all__ = ["ConfigRender", "__version__", "ConfigRenderException", "ConfigurationNotFoundException",
            "NotSpecifiedException", "OutputFileNotSpecifiedException",
