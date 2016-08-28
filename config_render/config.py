@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import os
+from os.path import expandvars
 
 import yaml
 
@@ -50,7 +51,7 @@ class Configuration(object):
         filename = output_file or os.environ.get(self.output_file_path_var, self.output_file_path)
         if filename is None:
             raise OutputFileNotSpecifiedException()
-        return filename
+        return expandvars(filename)
 
     def get_template(self, template_name=None):
         """Get template or TemplateNameNotSpecified"""

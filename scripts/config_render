@@ -4,26 +4,24 @@ import sys
 from argparse import SUPPRESS, Action, ArgumentParser, RawDescriptionHelpFormatter
 
 from jinja2.exceptions import TemplateNotFound
+from os.path import expandvars
 
 from config_render import ConfigRender, __version__, Parser, ConfigRenderException
 
 
 CONFIG_HELP = """This help describdes how the config file should look like.
 
-Example Config file:
-# Special configuration which applies when -t and -o is specified
+# Default Configuration
 default:
   # Path to template
-  # This is overridedid by -t option
-  template_path: some_template.config
+  # This is can be override by -t option
+  template_path: foo.template
   # Enviroment template varible
-  # if specified we firt try to use if not specified we fallback to
-  # template_path
+  # if specified we first try to use it if not we fallback to template_path
   template_path_var: SOME_TEMPLATE_PATH
-  # This is overridedid by -o option
-  output_file_path: something.cfg
-  # if specified we firt try to use if not specified we fallback to
-  # output_file_path
+  # This is can be override by -o option
+  output_file_path: foo.cfg
+  # if specified we first try to use if not we fallback to output_file_path
   output_file_path_var: SOME_OUTPUT_PATH
   # Load varibles from system environment
   # env_variables are superior to varibles
@@ -34,13 +32,33 @@ default:
   variables:
   # false, off is parsed as python False if you wan to use them as string
   # use "off"
-    debug: off
-    server_https: "on"
+      debug: off
+    server_https: "on" # Non boolean value
     db_type: postgresql
     ip_adress: 127.0.0.1 # fallback if DAJNGO_IP_ADDR does not exist
+mysql:
+  template_path: mysql.template
+  output_file: $HOME/mysql_dir
+  variables:
+    user: django
+    password: django
+    ip_adress: 127.0.0.1
 
 
+Warning:
+* Numbers are automaticly convered to ints.
+* '~' or 'null' is converted to None
+* 'false', 'true', 'on', 'off' are converted to boolean.
+* If you want to use one of these put them inside '' or ""
+* Inline comments are denoted with ' #' (space then #).
 """
+
+EPILOG = """
+Copyright (C) 2016 Filip Dobrovolny
+"""
+
+VERSION_TEXT = "%%(prog)s %s\n\nCopyright (C) 2016 Filip Dobrovolny\nLicense: MIT" % __version__
+DESCRIPTION = "Render your files with Jinja2 templates."
 
 
 class HelpConfig(Action):
@@ -52,11 +70,9 @@ class HelpConfig(Action):
         parser._print_message(CONFIG_HELP)
         parser.exit()
 
-VERSION_TEXT = "%%(prog)s %s\n\nCopyright (C) 2016 Filip Dobrovolny\nLicense: MIT" % __version__
-DESCRIPTION = "Render your files with Jinja2 templates."
 
 parser = ArgumentParser(version=VERSION_TEXT, description=DESCRIPTION,
-                        formatter_class=RawDescriptionHelpFormatter)
+                        formatter_class=RawDescriptionHelpFormatter, epilog=EPILOG)
 parser.register("action", "help_config", HelpConfig)
 parser.add_argument("-ch", "--config-help", help="show config file help and exit",
                     action="help_config")
@@ -67,7 +83,7 @@ parser.add_argument("-t", "--template_name", help="Template file", metavar="temp
 parser.add_argument("-o", "--output_file", help="Output File", metavar="FILE")
 
 args = parser.parse_args()
-with open(args.config, "r") as f:
+with open(expandvars(args.config), "r") as f:
     conf = Parser(f).parse()
 
 conf_render = ConfigRender()

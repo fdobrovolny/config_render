@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from jinja2 import Environment
-from jinja2 import BaseLoader, TemplateNotFound
-from os.path import exists, getmtime
+from os.path import exists, expandvars, getmtime
+
+from jinja2 import BaseLoader, Environment, TemplateNotFound
 
 
 class FileTemplateLoader(BaseLoader):
@@ -12,7 +12,7 @@ class FileTemplateLoader(BaseLoader):
                 if not exists(template):
                     raise TemplateNotFound(template)
                 mtime = getmtime(template)
-                with file(template) as f:
+                with file(expandvars(template)) as f:
                     source = f.read().decode('utf-8')
                 return source, template, lambda: mtime == getmtime(template)
 
