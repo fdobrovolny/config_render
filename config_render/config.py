@@ -50,14 +50,21 @@ class Configuration(object):
 
     def get_filename(self, output_file=None):
         """Get filename or OutputFileNotSpecified"""
-        filename = output_file or os.environ.get(self.output_file_path_var, self.output_file_path)
+        if self.output_file_path_var is not None:
+            filename = output_file or os.environ.get(self.output_file_path_var,
+                                                     self.output_file_path)
+        else:
+            filename = output_file or self.output_file_path
         if filename is None:
             raise OutputFileNotSpecifiedException()
         return expandvars(filename)
 
     def get_template(self, template_name=None):
         """Get template or TemplateNameNotSpecified"""
-        template = template_name or os.environ.get(self.template_path_var, self.template_path)
+        if self.template_path_var is not None:
+            template = template_name or os.environ.get(self.template_path_var, self.template_path)
+        else:
+            template = template_name or self.template_path
         if template is None:
             raise TemplateNameNotSpecifiedException()
         return template
@@ -90,7 +97,7 @@ class Config(object):
             if "default" in self.configurations:
                 return self["default"]
             elif len(self.configurations) == 1:
-                return self[self.configurations.keys()[0]]
+                return self[list(self.configurations.keys())[0]]
             else:
                 raise ConfigurationNotFoundException("default")
         try:
