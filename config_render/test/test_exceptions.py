@@ -2,13 +2,6 @@ import unittest
 
 from config_render.exceptions import ConfigRenderException, ConfigurationNotFoundException
 
-import six
-
-if six.PY2:
-    import mock
-else:
-    from unittest import mock
-
 
 class TestConfigRenderException(unittest.TestCase):
     def test___init__(self):
