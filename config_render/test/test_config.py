@@ -61,7 +61,7 @@ class TestConfiguration(unittest.TestCase):
             mock.call(some_dict, "env_variables"),
             mock.call(some_dict, "variables"),
         ]
-        set_if_exists_mock.assert_has_calls(calls)
+        set_if_exists_mock.assert_has_calls(calls, any_order=True)
 
     def test_get_context_var_only(self):
         """Test get_context with variables only."""
@@ -304,7 +304,7 @@ class TestParse(unittest.TestCase):
     @mock.patch.object(config, "file", create=True)
     def test___init__(self, file_mock):
         """Test __init__ and file handling."""
-        file_mock = mock.MagicMock(spec=file)
+        file_mock = mock.MagicMock()
         p = config.Parser(file=file_mock)
         self.assertEqual(file_mock, p.file)
 
@@ -321,4 +321,5 @@ class TestParse(unittest.TestCase):
 
         yaml_load_mock.assert_called_once_with(file_mock.read.return_value)
         self.assertEqual(register_configuration_mock.call_count, 2)
-        configuration_mock.assert_has_calls([mock.call("Foo", "bar"), mock.call("Foo2", "bar2")])
+        configuration_mock.assert_has_calls([mock.call("Foo", "bar"), mock.call("Foo2", "bar2")],
+                                            any_order=True)
