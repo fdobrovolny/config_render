@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from jinja2 import Environment
 from jinja2 import BaseLoader, TemplateNotFound
-from os.path import join, exists, getmtime
+from os.path import exists, getmtime
 
 
 class FileTemplateLoader(BaseLoader):
