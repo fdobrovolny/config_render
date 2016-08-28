@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
 '''
-Created on 13. 12. 2015
+Created on 28. 8. 2016
 
-@author: Tomas Dobrovolny
+@author: Filip Dobrovolny
 '''
 
 from setuptools import setup
-from NAME import __version__
+from config_render import __version__
 import os
 import io
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+
 
 def read(*filenames, **kwargs):
     encoding = kwargs.get('encoding', 'utf-8')
@@ -23,31 +24,33 @@ def read(*filenames, **kwargs):
     return sep.join(buf)
 
 setup(
-    name='NAME',
+    name='config_render',
     version=__version__,
     platforms=['OS Independent'],
-    description='Filter to convert whitespaces to &nbps; in django templates.',
+    description='Render your config files automaticly with Jinja2.',
     # long_description=read('README.txt', 'CHANGES.txt'),
-    keywords='django filter whitespace nbsp',
-    url='https://tomas.dobrovolny.eu/django-nbsp-filter',
-    author='Tomas Dobrovolny',
-    author_email='sdobrtomas@gmail.com',
+    keywords='jinja2 config',
+    url='https://github.com/BrnoPCmaniak/config_render',
+    author='Filip Dobrovolny',
+    author_email='brnopcman@gmail.com',
     license='MIT',
-    maintainer='Tomas Dobrovolny',
-    maintainer_email='sdobrtomas@gmail.com',
+    maintainer='Filip Dobrovolny',
+    maintainer_email='brnopcman@gmail.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'Framework :: Django',
-        'Intended Audience :: Developers',
+        'Environment :: Console',
+        'Intended Audience :: System Administrators',
+        'Topic :: System :: Installation/Setup',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Utilities',
     ],
-    packages=['NAME'],
+    packages=['config_render'],
+    scripts=['scripts/config_render'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'django',
+        'jinja2',
     ],
 )
