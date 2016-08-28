@@ -22,6 +22,6 @@ class OutputFileNotSpecifiedException(NotSpecifiedException):
 class ConfigurationNotFoundException(ConfigRenderException):
     message_format = "Configuration '%s' not found."
 
-    def __int__(self, configuration):
+    def __init__(self, configuration):
         self.message = self.message_format % configuration
         super(ConfigurationNotFoundException, self).__init__()
