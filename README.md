@@ -3,7 +3,7 @@
 Config Render
 =============
 
-Render your config files automaticly with Jinja2!!
+Automatically generate your config files with Jinja2 templates.
 
 Homepage
 --------

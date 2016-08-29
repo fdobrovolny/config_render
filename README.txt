@@ -1,45 +1,47 @@
 Config Render
 =============
 
-Render your config files automaticly with Jinja2!!
+Automatically generate your config files with Jinja2 templates.
 
 Homepage
 --------
 
-Visit the home of 'config_render' on the web:
-[github.com/BrnoPCmaniak/config_render](https://github.com/BrnoPCmaniak/config_render)
+Visit the home of `config_render` on the web:
+[github.com/BrnoPCmaniak/config\_render](https://github.com/BrnoPCmaniak/config_render)
 
 Documentation
 -------------
 
 Usage:
-$ config_render --help
-usage: config_render [-h] [-v] [-ch] [-n config_name] [-t template] [-o FILE]
-                     config
 
-Render your files with Jinja2 templates.
+    $ config_render --help
+    usage: config_render [-h] [-v] [-ch] [-n config_name] [-t template] [-o FILE]
+                         config
 
-positional arguments:
-  config                YAML config file
+    Render your files with Jinja2 templates.
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         show program's version number and exit
-  -ch, --config-help    show config file help and exit
-  -n config_name, --name config_name
-                        Name of configuration to be used. If not specified
-                        configuration with name 'default' will be used or if
-                        there is no such configuration and config has only one
-                        item than it will use it.
-  -t template, --template_name template
-                        Template file
-  -o FILE, --output_file FILE
-                        Output File
+    positional arguments:
+      config                YAML config file
 
-Copyright (C) 2016 Filip Dobrovolny
+    optional arguments:
+      -h, --help            show this help message and exit
+      -v, --version         show program's version number and exit
+      -ch, --config-help    show config file help and exit
+      -n config_name, --name config_name
+                            Name of configuration to be used. If not specified
+                            configuration with name 'default' will be used or if
+                            there is no such configuration and config has only one
+                            item than it will use it.
+      -t template, --template_name template
+                            Template file
+      -o FILE, --output_file FILE
+                            Output File
 
+    Copyright (C) 2016 Filip Dobrovolny
 
 Config File Explained:
+
+``` {.yaml}
 # Default Configuration
 default:
   # Path to template
@@ -70,20 +72,22 @@ mysql:
     user: django
     password: django
     ip_adress: 127.0.0.1
-
+```
 
 Warning:
--------------
-* Numbers are automaticly convered to ints.
-* '~' or 'null' is converted to None
-* 'false', 'true', 'on', 'off' are converted to boolean.
-* If you want to use one of these put them inside '' or ""
-* Inline comments are denoted with ' #' (space then #).
+--------
+
+-   Numbers are automaticly convered to ints.
+-   `~` or `null` is converted to None
+-   `false`, `true`, `on`, `off` are converted to boolean.
+-   If you want to use one of these put them inside `''` or `""`
+-   Inline comments are denoted with `' #'` (space then \#).
 
 Quick start Jinja2 templates:
-[server]
-ip_adress="{{ ip_adress }}"
-user="{{ django }}"
-password="{{ password }}"
 
-For more info follow jinja2 Templates Manual (http://jinja.pocoo.org/docs/dev/templates/).
+    [server]
+    ip_adress="{{ ip_adress }}"
+    user="{{ django }}"
+    password="{{ password }}"
+
+For more info follow [jinja2 Templates Manual](http://jinja.pocoo.org/docs/dev/templates/).

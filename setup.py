@@ -27,9 +27,9 @@ setup(
     name='config_render',
     version=__version__,
     platforms=['OS Independent'],
-    description='Render your config files automaticly with Jinja2.',
-    # long_description=read('README.txt', 'CHANGES.txt'),
-    keywords='jinja2 config',
+    description='Automatically generate your config files with Jinja2 templates.',
+    long_description=read('README.txt', 'CHANGELOG.md'),
+    keywords='jinja2 config automation generation',
     url='https://github.com/BrnoPCmaniak/config_render',
     author='Filip Dobrovolny',
     author_email='brnopcman@gmail.com',
@@ -41,6 +41,7 @@ setup(
         'Environment :: Console',
         'Intended Audience :: System Administrators',
         'Topic :: System :: Installation/Setup',
+        'Topic :: System :: Systems Administration',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -52,5 +53,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'jinja2',
+        'PyYAML',
+        'future'
     ],
 )
